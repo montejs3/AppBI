@@ -21,7 +21,7 @@ function File() {
     const handlePredictClick = async () => {
         // Make a POST request to the API endpoint
         try {
-          const response = await axios.post('http://127.0.0.1:8000/test_error', { "Textos_espanol": [inputText] });
+          const response = await axios.post('http://127.0.0.1:8000/predict', { "Textos_espanol": [inputText] });
           console.log(response.data);
           setPredictions(response.data); // Update state with model predictions
         } catch (error) {

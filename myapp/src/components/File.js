@@ -75,22 +75,22 @@ function File() {
 
     <Row>
       <h3>Prediciones individuales</h3>
-        <Col>
+
         <Form>
-        <input
+        {/* <input
           type="text"
           placeholder="Enter text in Spanish"
           value={inputText}
           onChange={handleInputChange}
-        />
+        /> */}
+        <Form.Label>Texto a predecir</Form.Label>
+        <Form.Control as="textarea" rows={3} value={inputText} onChange={handleInputChange} />
         </Form>
-        <Button onClick={handlePredictClick}>Predict</Button>
-        </Col>
-
-        <Col>
-
-    
-        {predictions.length > 0 && (
+        <Button className='m-4' style={{backgroundColor:"#1ca7df"}} onClick={handlePredictClick}>Predict</Button>
+       
+    </Row>
+    <Row>
+    {predictions.length > 0 && (
           <div>
             <h2>Predictions:</h2>
             <ul>
@@ -102,10 +102,11 @@ function File() {
           </div>
         
         )}
-        </Col>
-
     </Row>
+
     <Row>
+    <h3>Predicciones teniendo como input archivos</h3>
+    <Form.Group>
     <Form.Check
             inline
             label="CSV"
@@ -122,10 +123,10 @@ function File() {
             value="excel"
             onChange={handleFileTypeChange}
           />
-      <h3>Predicciones teniendo como input archivos</h3>
+      </Form.Group>
       <input type="file" onChange={handleFileChange} />
   
-      <Button onClick={handleUpload}>Upload and Send POST Request</Button>
+      <Button className='m-4' style={{backgroundColor:"#1ca7df"}} onClick={handleUpload}>Upload and Send POST Request</Button>
       {response && (
         <div>
           <h2>Response Data:</h2>

@@ -5,7 +5,9 @@ import { Form , Button, Row, Container, Col} from 'react-bootstrap';
 function File() {
     const [inputText, setInputText] = useState([]); // State to store user input
     const [predictions, setPredictions] = useState([]); // State to store model predictions
-  
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [response, setResponse] = useState(null);
+
     const handleInputChange = (event) => {
      
         setInputText(event.target.value);
@@ -14,11 +16,34 @@ function File() {
     const handlePredictClick = async () => {
         // Make a POST request to the API endpoint
         try {
-          const response = await axios.post('http://127.0.0.1:8000/predict', { "Textos_espanol": [inputText] });
+          const response = await axios.post('http://127.0.0.1:8000/test_error', { "Textos_espanol": [inputText] });
           console.log(response.data);
           setPredictions(response.data); // Update state with model predictions
         } catch (error) {
           console.error('Error making API request:', error);
+        }
+      };
+
+      const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+      };
+
+      const handleUpload = () => {
+        if (selectedFile) {
+          const formData = new FormData();
+          formData.append('file', selectedFile);
+    
+          axios.post('http://127.0.0.1:8000/uploadCsv', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            setResponse(res.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
         }
       };
   
@@ -58,6 +83,16 @@ function File() {
         
         )}
         </Col>
+
+    </Row>
+    <Row>
+      <input type="file" onChange={handleFileChange} />
+      <Button onClick={handleUpload}>Upload and Send POST Request</Button>
+      {response && (
+        <div>
+          <h2>Response Data:</h2>
+          <pre>{JSON.stringify(response, null, 2)}</pre>
+        </div>)}
     </Row>
     </Container>
      

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Form , Button, Row, Container, Col} from 'react-bootstrap';
+import { Form , Button, Row, Container} from 'react-bootstrap';
 
 function File() {
     const [inputText, setInputText] = useState([]); // State to store user input
@@ -30,11 +30,12 @@ function File() {
       };
 
       const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+        setSelectedFile("dd");
       };
 
       const handleUpload = () => {
         if (selectedFile) {
+          console.log(selectedFile);
           const formData = new FormData();
           formData.append('file', selectedFile);
           if (selectedFileType === "csv") {
@@ -73,70 +74,33 @@ function File() {
         <h2>Modelo de predicciones</h2>
       </Row>
 
-    <Row>
+     <Row id="predictions">
       <h3>Prediciones individuales</h3>
 
         <Form>
-        {/* <input
-          type="text"
-          placeholder="Enter text in Spanish"
-          value={inputText}
-          onChange={handleInputChange}
-        /> */}
+      
         <Form.Label>Texto a predecir</Form.Label>
         <Form.Control as="textarea" rows={3} value={inputText} onChange={handleInputChange} />
         </Form>
         <Button className='m-4' style={{backgroundColor:"#1ca7df"}} onClick={handlePredictClick}>Predict</Button>
        
-    </Row>
+      </Row>
+ 
     <Row>
     {predictions.length > 0 && (
-          <div>
+          <Row>
             <h2>Predictions:</h2>
-            <ul>
+          
         
               {predictions.map((prediction, index) => (
-                <li key={index}>{prediction.sdg}</li>
+                <h2 key={index}>{prediction.sdg}</h2>
               ))}
-            </ul>
-          </div>
+           
+          </Row>
         
         )}
-    </Row>
+    </Row> 
 
-    <Row>
-    <h3>Predicciones teniendo como input archivos</h3>
-    <Form.Group>
-    <Form.Check
-            inline
-            label="CSV"
-            name="group1"
-            type="radio"
-            value = "csv"
-            onChange={handleFileTypeChange}
-          />
-          <Form.Check
-            inline
-            label="Excel"
-            name="group1"
-            type="radio"
-            value="excel"
-            onChange={handleFileTypeChange}
-          />
-      </Form.Group>
-      <input type="file" onChange={handleFileChange} />
-  
-      <Button className='m-4' style={{backgroundColor:"#1ca7df"}} onClick={handleUpload}>Upload and Send POST Request</Button>
-      {response && (
-        <div>
-          <h2>Response Data:</h2>
-          <pre>{JSON.stringify(response, null, 2)}</pre>
-        </div>)}
-
-      {selectedFileType === "csv" ? (
-        <h1>CSV</h1>
-      ) : (<h1>Excel</h1>)}
-    </Row>
     </Container>
      
     );

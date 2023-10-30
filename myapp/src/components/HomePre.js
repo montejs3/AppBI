@@ -1,10 +1,10 @@
 import React from "react";
-import { Container, Nav, Navbar, NavDropdown, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 function HomePre() {
     return (
         <Container>
-            <Row>
+            <Row id="Home">
             <h1>Nuestro Objetivo</h1>
             <p>Con esta pagina buscamos ayudar a predicir con base a un texto, el tipo de ODS al que este pertence.
                  Nuestro modelo solo permite predecir entre tres tipos de ODS. A continuación detallamos cada uno de estos</p>
